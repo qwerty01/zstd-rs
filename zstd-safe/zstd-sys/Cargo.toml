@@ -32,6 +32,8 @@ include = [
     "/zstd/lib/**/*.c",
     "/zstd/lib/**/*.h",
     "/zstd/lib/**/*.S",
+    "/zstd/contrib/seekable_format/*.c",
+    "/zstd/contrib/seekable_format/*.h",
 ]
 # exclude = [
 #     "zstd",
@@ -76,6 +78,7 @@ zstdmt = [] # Enable multi-thread support (with pthread)
 thin = [] # Optimize binary by size
 no_asm = [] # Disable ASM files (only on amd64 for decompression)
 zdict_builder = []
+seekable = [] # Enable non-standard seekable API
 
 # These two are for cross-language LTO.
 # Will only work if `clang` is used to build the C library.

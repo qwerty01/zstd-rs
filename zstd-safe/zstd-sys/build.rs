@@ -7,6 +7,8 @@ fn generate_bindings(defs: Vec<&str>, headerpaths: Vec<PathBuf>) {
     let bindings = bindgen::Builder::default().header("zstd.h");
     #[cfg(feature = "zdict_builder")]
     let bindings = bindings.header("zdict.h");
+    #[cfg(feature = "seekable")]
+    let bindings = bindings.header("zstd_seekable.h");
     let bindings = bindings
         .blocklist_type("max_align_t")
         .size_t_is_usize(true)
@@ -97,6 +99,8 @@ fn compile_zstd() {
         "zstd/lib/dictBuilder",
         #[cfg(feature = "legacy")]
         "zstd/lib/legacy",
+        #[cfg(feature = "seekable")]
+        "zstd/contrib/seekable_format",
     ] {
         let mut entries: Vec<_> = fs::read_dir(dir)
             .unwrap()
@@ -271,7 +275,13 @@ fn main() {
         );
 
         compile_zstd();
-        (vec![], vec![manifest_dir.join("zstd/lib")])
+        (
+            vec![],
+            vec![
+                manifest_dir.join("zstd/lib"),
+                manifest_dir.join("zstd/contrib/seekable_format"),
+            ],
+        )
     };
 
     let includes: Vec<_> = headerpaths

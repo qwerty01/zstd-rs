@@ -36,6 +36,14 @@ include!("bindings_zdict.rs");
 
 #[cfg(all(
     not(feature = "std"),
+    not(feature = "experimental"),
+    feature = "zdict_builder",
+    not(feature = "bindgen")
+))]
+include!("bindings_zstd_seekable.rs");
+
+#[cfg(all(
+    not(feature = "std"),
     feature = "experimental",
     not(feature = "bindgen")
 ))]
@@ -48,6 +56,14 @@ include!("bindings_zstd_experimental.rs");
     not(feature = "bindgen")
 ))]
 include!("bindings_zdict_experimental.rs");
+
+#[cfg(all(
+    not(feature = "std"),
+    feature = "experimental",
+    feature = "seekable",
+    not(feature = "bindgen")
+))]
+include!("bindings_zstd_seekable_experimental.rs");
 
 // Std-based (no libc)
 #[cfg(all(
@@ -66,6 +82,15 @@ include!("bindings_zstd_std.rs");
 ))]
 include!("bindings_zdict_std.rs");
 
+// Std-based (no libc)
+#[cfg(all(
+    feature = "std",
+    not(feature = "experimental"),
+    feature = "seekable",
+    not(feature = "bindgen")
+))]
+include!("bindings_zstd_seekable_std.rs");
+
 #[cfg(all(
     feature = "std",
     feature = "experimental",
@@ -80,3 +105,11 @@ include!("bindings_zstd_std_experimental.rs");
     not(feature = "bindgen")
 ))]
 include!("bindings_zdict_std_experimental.rs");
+
+#[cfg(all(
+    feature = "std",
+    feature = "experimental",
+    feature = "seekable",
+    not(feature = "bindgen")
+))]
+include!("bindings_zstd_seekable_std_experimental.rs");

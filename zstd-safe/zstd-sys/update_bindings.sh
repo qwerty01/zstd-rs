@@ -26,6 +26,7 @@ for NO_STD_ARG in "$no_std" ""; do
         filename=src/bindings${STD}${EXPERIMENTAL}.rs
 
         run_bindgen zstd.h --allowlist-type "ZSTD_.*" --allowlist-function "ZSTD_.*" --allowlist-var "ZSTD_.*" $NO_STD_ARG -- -Izstd/lib $EXPERIMENTAL_ARG > src/bindings_zstd${SUFFIX}.rs
+        run_bindgen zstd_seekable.h --allowlist-type "ZSTD_seek.*" --blocklist-type "ZSTD_.+Buffer.*" --allowlist-function "ZSTD_seek.*" --allowlist-var "ZSTD_seek.*" $NO_STD_ARG -- -Izstd/lib -Izstd/contrib/seekable_format $EXPERIMENTAL_ARG > src/bindings_zstd_seekable${SUFFIX}.rs
         run_bindgen zdict.h --blocklist-type wchar_t $NO_STD_ARG -- -Izstd/lib $EXPERIMENTAL_ARG > src/bindings_zdict${SUFFIX}.rs
     done
 done
