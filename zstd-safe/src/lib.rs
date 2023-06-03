@@ -22,6 +22,9 @@
 #[cfg(feature = "std")]
 extern crate std;
 
+#[cfg(feature = "seekable")]
+pub mod seekable;
+
 #[cfg(test)]
 mod tests;
 
